@@ -25,11 +25,10 @@
 #####################################################
 
 .section .text
-.global _start
-.extern gen_random
+.global mul_asm
 
 
-_start:
+mul_asm:
 
 #   initialize TUBE address as DAMI
    li x3,   0x13000000
@@ -96,8 +95,7 @@ part:
 # jump done
 
 2:     	
-     jal x0, _finish
-     jal x1, 3f
+     jal x24, 3f
      jal x0, _finish
 
 #   compare calculated value with the actual value
@@ -143,7 +141,7 @@ pass:
 4:   la x2, pass_msg	#initialize
      # la x30, tag_test   #tag_test
 
-5:   jalr x0, x1, 0
+5:   jalr x0, x24, 0
 
 
 #test_failed
@@ -164,7 +162,7 @@ fail:
 4:   la x4, fail_msg	#initialize 
      # la x30, tag_test   #tag_test
 
-5:   jalr x0, x1, 0
+5:   jalr x0, x24, 0
 
   
 _finish:
