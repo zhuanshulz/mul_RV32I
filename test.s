@@ -26,20 +26,23 @@
 
 .section .text
 .global _start
+.extern gen_random
+
+
 _start:
 
 #   initialize TUBE address as DAMI
    li x3,   0x13000000
-   li x10,  0xff012303
-   li x11,  0xff012300
+#   li x10,  0xff012303
+#   li x11,  0xff012300
 
    la x2, pass_msg #load pass_msg
    la x4, fail_msg #load pass_msg
    la x29, line_feed #load line_feed
 #   la x30, tag_test #tag_test
 
-	mul x20, x10,x11
-	mulhu x21, x10, x11
+#	mul x20, x10,x11
+#	mulhu x21, x10, x11
 
 #   initialize register
 
@@ -93,8 +96,8 @@ part:
 # jump done
 
 2:     	
+     jal x0, _finish
      jal x1, 3f
-
      jal x0, _finish
 
 #   compare calculated value with the actual value
@@ -165,6 +168,7 @@ fail:
 
   
 _finish:
+	jalr x0, x1, 0
     li x3, 0x13000000
 #   send CTRL+D to TUBE to indicate finish test
     addi x5, x0, 0x4
