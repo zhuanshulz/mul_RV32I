@@ -15,5 +15,10 @@ The final problem is the carry out from lower bits accumulator. So if there is a
 
 ![carry out mechanism](./pic/carryout.svg)
 
-## Program Flow
+CARRY OUT signal is obtained by the following equation:
+$$ CARRY OUT = Reg.D < num2 $$
 
+## Program Flow
+The program flow chart is shown in below:
+
+![program flow](./pic/program.svg)
