@@ -5,7 +5,7 @@
 #register usage:
 
 #x1:compare return address
-#x2:pass data address
+#x6:pass data address
 #x3:exit address 0x13000000
 #x4:fail data address
 #x5:print string
@@ -35,8 +35,8 @@ mul_asm:
 #   li x10,  0xff012300
 #   li x11,  0xff012303
 
-   la x2, pass_msg #load pass_msg
    la x4, fail_msg #load pass_msg
+   la x6, pass_msg #load pass_msg
    la x29, line_feed #load line_feed
 
 	mul x20, x10,x11
@@ -130,15 +130,15 @@ part:
 #test_passed
 pass:
   
-1:   lb x5, 0(x2)
+1:   lb x5, 0(x6)
      sb x5, 0(x3)
-     addi x2, x2, 1
+     addi x6, x6, 1
      bnez x5, pass
 
 3:   lb x5, 0(x29)
      sb x5, 0(x3)
 
-4:   la x2, pass_msg	#initialize
+4:   la x6, pass_msg	#initialize
 
 5:   jalr x0, x24, 0
 

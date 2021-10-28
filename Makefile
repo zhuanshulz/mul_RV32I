@@ -5,7 +5,7 @@ GCC=riscv32-unknown-linux-gnu-gcc
 LD=riscv32-unknown-linux-gnu-ld
 AS=riscv32-unknown-linux-gnu-as
 FLAGS=-mabi=ilp32 -march=rv32im
-lib = $(wildcard ./lib/*.h)
+lib = $(wildcard ./lib/*.o)
 src1 = $(wildcard ./*.c)
 src2 = $(wildcard ./*.s)
 obj1 = $(patsubst %.c, %.o, $(src1))
