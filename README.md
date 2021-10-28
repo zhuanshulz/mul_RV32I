@@ -20,6 +20,12 @@ CARRY OUT signal is obtained by the following equation:
 $$ CARRY OUT = Reg.D < num2 $$
 
 ## Program Flow
+### asm mul program
 The program flow chart is shown in below:
 
 ![program flow](./pic/program.svg#pic_center)
+
+### C & asm architecture
+C program input the values and call asm to compute the mul results
+
+![c&asm program flow](./pic/c_asm_v2.svg)
