@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<my_printf.h>
+#include<config.h>
 unsigned int return_values[2];
 
 
@@ -44,15 +45,17 @@ void break_run_asm(){
 }
 
 void main(){
-    unsigned int mul_a = 0xf5679300;
-    unsigned int mul_b = 0xff012303;
+    // unsigned int mul_a = 0xf5679300;
+    // unsigned int mul_b = 0xff012303;
     
-    my_printf("test condition: mul_a = %X, mul_b = %X \n", mul_a, mul_b);
+    for(int i = 0; i < test_time; i++){
+        my_printf("test condition %d: mul_a = %X, mul_b = %X \n", i,  mul_a[i], mul_b[i]);
 
-    call_mul_asm(mul_a, mul_b);
+        call_mul_asm(mul_a[i], mul_b[i]);
+
+        my_printf("computed results %d: higher_bits = %X, lower_bits = %X \n",i, return_values[1], return_values[0]);
+    }
     
-    my_printf("computed results: higher_bits = %X, lower_bits = %X \n", return_values[1], return_values[0]);
-
     break_run_asm();
 }
 

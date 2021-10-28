@@ -1,6 +1,8 @@
 # this is the name of the program
 export TEST=test
 
+TESTTIME = 10
+
 GCC=riscv32-unknown-linux-gnu-gcc
 LD=riscv32-unknown-linux-gnu-ld
 AS=riscv32-unknown-linux-gnu-as
@@ -22,14 +24,16 @@ obj3 = $(patsubst %.h, %.o, $(lib))
 	$(AS) $(FLAGS) $< -o $@
 
 
-all: clean link run clean_interm_files
+all: clean reconfig link sim clean_interm_files
 
 link:$(obj3)$(obj2) $(obj1) 
 	$(LD) --discard-none  -T link.ld -o $(TEST).elf $(obj1) $(obj2) -static -L./lib/
 	
-run:$(TEST).elf
+sim:$(TEST).elf
 	spike --isa=rv32g --log-commits -l --log=trace.tarmac ${TEST}.elf
 
+reconfig:
+	python3 ./random_.py $(TESTTIME)
 
 clean:
 	rm -rf ./*.o ./$(TEST).elf ./*.tarmac ./*.lst ./lib/*.o

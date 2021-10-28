@@ -42,6 +42,10 @@ mul_asm:
 	mul x20, x10,x11
 	mulhu x21, x10, x11
 
+####  test error mechanism ####
+#   li x11,  0xff012303
+####  test error mechanism ####
+
 #   initialize register
 
 #   lable pc
@@ -156,7 +160,13 @@ fail:
 
 4:   la x4, fail_msg	#initialize 
 
-5:   jalr x0, x24, 0
+5:   
+# if error, then dump core.
+    li x3, 0x13000000
+    addi x5, x0, 0x4
+    sb x5, 0(x3)
+
+	jalr x0, x24, 0
 
   
 _finish:
