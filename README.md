@@ -1,5 +1,7 @@
 # Unsigned Multiplication using RV32I ISA
 This is a multiplication function using RV32I assembly language.
+
+The test handbook can be seen in [here](./doc/test_handbook.md)
 The debug log file can be seen in [here](./doc/debug.md).
 ## Algorithm Theory
 ### shift accumulator
