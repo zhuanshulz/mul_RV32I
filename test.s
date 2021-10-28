@@ -38,7 +38,6 @@ mul_asm:
    la x2, pass_msg #load pass_msg
    la x4, fail_msg #load pass_msg
    la x29, line_feed #load line_feed
-#   la x30, tag_test #tag_test
 
 	mul x20, x10,x11
 	mulhu x21, x10, x11
@@ -106,8 +105,6 @@ part:
 
 #   compare calculated value with the actual value
 3:
-     # la x30, tag_test #tag_test
-     # addi x30, x30, 0
 	bne x18,x20,fail
 	beq x19,x21,pass
 	jal x0,fail
@@ -138,14 +135,10 @@ pass:
      addi x2, x2, 1
      bnez x5, pass
 
-# 2:   lb x5, 0(x30)
-#     sb x5, 0(x3)
-
 3:   lb x5, 0(x29)
      sb x5, 0(x3)
 
 4:   la x2, pass_msg	#initialize
-     # la x30, tag_test   #tag_test
 
 5:   jalr x0, x24, 0
 
@@ -158,31 +151,18 @@ fail:
      addi x4, x4, 1
      bnez x5, fail
 
-2:   
-     lb x5, 0(x30)
-     sb x5, 0(x3)
-
 3:   lb x5, 0(x29)
      sb x5, 0(x3)
 
 4:   la x4, fail_msg	#initialize 
-     # la x30, tag_test   #tag_test
 
 5:   jalr x0, x24, 0
 
   
 _finish:
-    li x3, 0x13000000
-#   send CTRL+D to TUBE to indicate finish test
-    addi x5, x0, 0x4
-    sb x5, 0(x3)
 	jalr x0, x1, 0
-#   dead loop
     beq x0, x0, _finish
-#.rept 100
-#    nop
-#.endr
-#    nop
+
 .section .rodata
 pass_msg:
 .string "------PASS------"
@@ -190,8 +170,6 @@ pass_msg:
 fail_msg:
 .string "------FAIL------"
 .byte 0
-tag_test:
-.string "123456789abcdef"
 line_feed:
 .string "\n"
 .byte 0 

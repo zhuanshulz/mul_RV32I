@@ -1,6 +1,6 @@
 # Unsigned Multiplication using RV32I ISA
 This is a multiplication function using RV32I assembly language.
-
+The debug log file can be seen in [here](./debug.md).
 ## Algorithm Theory
 ### shift accumulator
 In RV32I, only 32 32bits reg files can be used. To implement mul operation through software, we must use two registers to store for the results.
