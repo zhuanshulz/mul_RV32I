@@ -32,16 +32,16 @@ mul_asm:
 
 #   initialize TUBE address as DAMI
    li x3,   0x13000000
-#   li x10,  0xff012303
-#   li x11,  0xff012300
+#   li x10,  0xff012300
+#   li x11,  0xff012303
 
    la x2, pass_msg #load pass_msg
    la x4, fail_msg #load pass_msg
    la x29, line_feed #load line_feed
 #   la x30, tag_test #tag_test
 
-#	mul x20, x10,x11
-#	mulhu x21, x10, x11
+	mul x20, x10,x11
+	mulhu x21, x10, x11
 
 #   initialize register
 
@@ -61,6 +61,12 @@ part:
 	beq x0, x11, 2f		#if x11 == 0 then braek, result = 0
 # judge zero parameter done
 
+# first index
+	and x15,x12,x11
+	beq x15,x0,4f
+	add x18,x18,x10
+	jal x0,4f
+# first index end
 
 1:	# origin: multiple add. new: shift add
      	# x10 x11 origin unsinged num
@@ -166,11 +172,11 @@ fail:
 
   
 _finish:
-	jalr x0, x1, 0
     li x3, 0x13000000
 #   send CTRL+D to TUBE to indicate finish test
     addi x5, x0, 0x4
     sb x5, 0(x3)
+	jalr x0, x1, 0
 #   dead loop
     beq x0, x0, _finish
 #.rept 100
