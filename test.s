@@ -59,6 +59,12 @@ part:
 	beq x0, x11, 2f		#if x11 == 0 then braek, result = 0
 # judge zero parameter done
 
+# first index
+	and x15,x12,x11
+	beq x15,x0,4f
+	add x18,x18,x10
+	jal x0,4f
+# first index end
 
 1:	# origin: multiple add. new: shift add
      	# x10 x11 origin unsinged num
