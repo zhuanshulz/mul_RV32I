@@ -6,10 +6,11 @@ The test handbook can be seen in [here](./doc/test_handbook.md).
 The debug log file can be seen in [here](./doc/debug.md).
 
 ## Test Performance: 
+Use ```make all -i``` to restart test. Configuration of the test time refers test [handbook](./doc/test_handbook.md).
 ```
-    0 * 0 = 6 cycles
-    0xffffffff * 0xffffffff = 449 cycles
-    random 1000 runtime = avarage 331 cycles
+    0           * 0             = 'd6   cycles
+    0xffffffff  * 0xffffffff    = 'd449 cycles
+    random      * random        = 'd331 cycles (avarage 1000 RUNTIME)
 ```
 ![test_0_f](./pic/test_0_f.png#pic_center)
 ![test_1000_runtime](./pic/test_1000_runtime.png#pic_center)

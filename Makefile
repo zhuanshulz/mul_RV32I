@@ -1,7 +1,7 @@
 # this is the name of the program
 export TEST=test
 
-TESTTIME = 1000
+TESTTIME = 1
 
 GCC=riscv32-unknown-linux-gnu-gcc
 LD=riscv32-unknown-linux-gnu-ld

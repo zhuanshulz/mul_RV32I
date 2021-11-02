@@ -7,7 +7,8 @@
 
 ## 测试操作步骤
 1. 进入Makefile 修改$(TESTTIME)变量，代表进行随机测试的次数。
-2. 使用命令`make all -i`即可开始测试
+2. 使用命令`make all -i`即可开始新一轮重新测试，倘若想进行针对性的数据测试，则根据第三点进行操作。
+3. 将测试的次数和测试的数据写入$config.h$文件，然后启用命令`make not_reconfig -i`即可开始测试。
 
 ## 实现原理
 1. 在Makefile中的TESTTIME变量会传入python脚本中。
