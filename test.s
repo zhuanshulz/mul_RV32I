@@ -1,7 +1,10 @@
 #####################################################
 #function description:
 #	32bits unsigned multiply using RV32I ISA
-#
+
+#	student:Yang Ling
+#	number:	20023093
+
 #register usage:
 
 #x1:compare return address
@@ -10,18 +13,21 @@
 #x4:fail data address
 #x5:print string
 #x29:line_feed data address
-#x30:tag_test data address
 
 #x6-x9:x0,x31 
 
 #funtion reg consumptions
 #x10-x11: multiply function parameters
+#x12,x15: process mask & mask and result
+#x13-x14: process index
+#x16-x17: temp lower/higher bits
 #x18-x19: multiply function returns
 #x20-x21: actual multiply result
 #x23: function instruction consumption
 
-#x28: temp reg
-
+#x27: csr minstret  readout value
+#x28: csr minstreth readout value
+#x26: assist to obtain csr minstreth
 #####################################################
 
 .section .text
@@ -50,6 +56,11 @@ mul_asm:
 
 #   lable pc
 
+# 	clear minstret
+	li x27, 0xffffffff
+	csrrc zero,minstret,x27
+#	csrrc zero,minstreth,x27
+#	clear done
 part:
 	
      lui x18, 0			#set x18 = 0x0
@@ -104,6 +115,12 @@ part:
 # jump done
 
 2:     	
+# 	read minstret
+#	csrrc x28,minstreth,zero
+	csrrc x27,minstret,zero
+#	csrrc x26,minstreth,zero
+#	bne x28,x26,2b
+#	read done
      jal x24, 3f
      jal x0, _finish
 
@@ -113,13 +130,13 @@ part:
 	beq x19,x21,pass
 	jal x0,fail
 
-4:	# for every bit, calculate down, then judge condition and selfadd index
+4:	# for every bit, calculate done, then judge condition and selfadd index
 	# update index
 	addi x13,x13,1
 	addi x14,x14,-1
 	# update mask
 	add x12,x12,x12
-	# update down
+	# update done
 
 	# judge index edge	
 	beq x14,x0,2b		# if index x14 == 0, then calculate done.

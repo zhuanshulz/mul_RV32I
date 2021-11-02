@@ -4,6 +4,16 @@ This is a multiplication function using RV32I assembly language.
 The test handbook can be seen in [here](./doc/test_handbook.md).
 
 The debug log file can be seen in [here](./doc/debug.md).
+
+## Test Performance: 
+```
+    0 * 0 = 6 cycles
+    0xffffffff * 0xffffffff = 449 cycles
+    random 1000 runtime = avarage 331 cycles
+```
+![test_0_f](./pic/test_0_f.png#pic_center)
+![test_1000_runtime](./pic/test_1000_runtime.png#pic_center)
+
 ## Algorithm Theory
 ### shift accumulator
 In RV32I, only 32 32bits reg files can be used. To implement mul operation through software, we must use two registers to store for the results.

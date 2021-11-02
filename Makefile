@@ -1,7 +1,7 @@
 # this is the name of the program
 export TEST=test
 
-TESTTIME = 10
+TESTTIME = 1000
 
 GCC=riscv32-unknown-linux-gnu-gcc
 LD=riscv32-unknown-linux-gnu-ld
@@ -25,6 +25,8 @@ obj3 = $(patsubst %.h, %.o, $(lib))
 
 
 all: clean reconfig link sim clean_interm_files
+
+not_reconfig: clean link sim clean_interm_files
 
 link:$(obj3)$(obj2) $(obj1) 
 	$(LD) --discard-none  -T link.ld -o $(TEST).elf $(obj1) $(obj2) -static -L./lib/

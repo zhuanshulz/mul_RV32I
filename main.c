@@ -2,7 +2,9 @@
 #include<my_printf.h>
 #include<config.h>
 unsigned int return_values[2];
-
+unsigned long ava_instrets;
+unsigned long all_instrets;
+unsigned int minstret;
 
 void call_mul_asm(unsigned int mul_a, unsigned int mul_b){
     // input parameters x10, x11
@@ -26,16 +28,20 @@ void call_mul_asm(unsigned int mul_a, unsigned int mul_b){
     asm volatile("jal x1, mul_asm");
 // function call done
     
-// data output
-    asm volatile("add %0,x0,x18":"=r"(return_values[0]));
-    asm volatile("add %0,x0,x19":"=r"(return_values[1]));
-// data output done
 
+    
 // restore envirement
     asm volatile("lw      s0, 24(sp)");
     asm volatile("lw      ra, 28(sp)");
     asm volatile("addi    sp, sp, 32");
 // restore done
+
+// data output
+    asm volatile("add %0,x0,x18":"=r"(return_values[0]));
+    asm volatile("add %0,x0,x19":"=r"(return_values[1]));
+    asm volatile("add %0,x0,x27":"=r"(minstret));
+    // asm volatile("add %0,x0,x28":"=r"(minstreth));
+// data output done
 }
 
 void break_run_asm(){
@@ -52,10 +58,15 @@ void main(){
         my_printf("test condition %d: mul_a = %X, mul_b = %X \n", i,  mul_a[i], mul_b[i]);
 
         call_mul_asm(mul_a[i], mul_b[i]);
-
+        all_instrets = all_instrets + minstret;
+        // ava_instrets = ((ava_instrets* i)/(i+1))  + (current_instrets/(i+1));
         my_printf("computed results %d: higher_bits = %X, lower_bits = %X \n",i, return_values[1], return_values[0]);
     }
-    
+    ava_instrets = all_instrets/test_time;
+    my_printf("\n------------------------------\n");
+    my_printf("\nRUNTIME : %d\n", test_time);
+    my_printf("avarage minstret is : %d \n", ava_instrets);
+    my_printf("\n------------------------------\n");
     break_run_asm();
 }
 
